@@ -9,89 +9,88 @@ import java.sql.Statement;
 public class App {
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(
-            new InetSocketAddress(8080), 0
-        );
+                new InetSocketAddress(8080), 0);
 
         /// HOME
         server.createContext("/", exchange -> {
             String html = """
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Sistema de Clientes</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            background-color: #f5f6fa;
-                            text-align: center;
-                            margin: 0;
-                        }
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>Sistema de Clientes</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f5f6fa;
+                                    text-align: center;
+                                    margin: 0;
+                                }
 
-                        header {
-                            background-color: #2f3640;
-                            color: white;
-                            padding: 20px;
-                        }
+                                header {
+                                    background-color: #2f3640;
+                                    color: white;
+                                    padding: 20px;
+                                }
 
-                        h1 {
-                            margin: 0;
-                        }
+                                h1 {
+                                    margin: 0;
+                                }
 
-                        .container {
-                            margin-top: 50px;
-                        }
+                                .container {
+                                    margin-top: 50px;
+                                }
 
-                        .card{
-                            display: inline-block;
-                            background: white;
-                            padding: 30px;
-                            margin: 20px;
-                            border-radius: 10px;
-                            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                            width: 200px;
-                        }
+                                .card{
+                                    display: inline-block;
+                                    background: white;
+                                    padding: 30px;
+                                    margin: 20px;
+                                    border-radius: 10px;
+                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                                    width: 200px;
+                                }
 
-                        .card a {
-                            display: block;
-                            text-decoration: none;
-                            color: white;
-                            background: #40739e;
-                            padding: 10px;
-                            border-radius: 5px;
-                            margin-top: 15px;
-                        }
+                                .card a {
+                                    display: block;
+                                    text-decoration: none;
+                                    color: white;
+                                    background: #40739e;
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    margin-top: 15px;
+                                }
 
-                        .card a:hover {
-                            background: #273c75;
-                        }
-                    </style>
-                </head>
-                <body>
+                                .card a:hover {
+                                    background: #273c75;
+                                }
+                            </style>
+                        </head>
+                        <body>
 
-                    <header>
-                        <h1>Sistema de Clientes</h1>
-                        <p>Gestão simples com Java + MySQL</p>
-                    </header>
+                            <header>
+                                <h1>Sistema de Clientes</h1>
+                                <p>Gestão simples com Java + MySQL</p>
+                            </header>
 
-                    <div class="container">
+                            <div class="container">
 
-                        <div class="card">
-                            <h3>Ver Clientes</h3>
-                            <p>Consultar lista completa</p>
-                            <a href="/clientes">Abrir</a>
-                        </div>
+                                <div class="card">
+                                    <h3>Ver Clientes</h3>
+                                    <p>Consultar lista completa</p>
+                                    <a href="/clientes">Abrir</a>
+                                </div>
 
-                        <div class="card">
-                            <h3>+ Novo Cliente</h3>
-                            <p>Adicionar novo registo</p>
-                            <a href="/novo">Criar</a>
-                        </div>
+                                <div class="card">
+                                    <h3>+ Novo Cliente</h3>
+                                    <p>Adicionar novo registo</p>
+                                    <a href="/novo">Criar</a>
+                                </div>
 
-                    </div>
+                            </div>
 
-                </body>
-                </html>
-            """;
+                        </body>
+                        </html>
+                    """;
 
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, html.getBytes().length);
@@ -99,45 +98,43 @@ public class App {
             exchange.close();
         });
 
-
-
-
         //// LISTA
         server.createContext("/clientes", exchange -> {
 
             StringBuilder html = new StringBuilder();
 
-                html.append("""
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <style>
-                            table { border-collapse: collapse; width: 100%; }
-                            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-                            th { background-color: #f4f4f4; }
-                            a { text-decoration: none; margin-right: 10px; }
-                        </style>
-                    </head>
-                    <body>
-                    <h2>Lista de Clientes</h2>
-                    <a href='/novo'>+ Novo Cliente</a><br><br>
+            html.append("""
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                table { border-collapse: collapse; width: 100%; }
+                                th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+                                th { background-color: #f4f4f4; }
+                                a { text-decoration: none; margin-right: 10px; }
+                            </style>
+                        </head>
+                        <body>
+                        <h2>Lista de Clientes</h2>
+                        <a href='/novo'>+ Novo Cliente</a><br><br>
 
-                    <table>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Ações</th>
-                        </tr>
-                """);             
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nif</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Ações</th>
+                            </tr>
+                    """);
 
             Connection con = LigacaoBD.ligar();
 
             if (con == null) {
                 System.out.println("Erro: ligação falhou!");
                 return;
-            }   
+            }
 
             try {
                 Statement st = con.createStatement();
@@ -145,12 +142,15 @@ public class App {
 
                 while (rs.next()) {
                     int id = rs.getInt("id");
+                    String nif = rs.getString("nif");
                     String nome = rs.getString("nome");
                     String email = rs.getString("email");
                     String telefone = rs.getString("telefone");
+                    
 
                     html.append("<tr>");
                     html.append("<td>").append(id).append("</td>");
+                    html.append("<td>").append(nif).append("</td>");
                     html.append("<td>").append(nome).append("</td>");
                     html.append("<td>").append(email).append("</td>");
                     html.append("<td>").append(telefone).append("</td>");
@@ -158,7 +158,7 @@ public class App {
                     html.append("<td>");
                     html.append("<a href='/editar?id=").append(id).append("'>Editar</a>");
                     html.append("<a href='/apagar?id=").append(id)
-                        .append("' onclick=\"return confirm('Eliminar cliente?')\">Apagar</a>");
+                            .append("' onclick=\"return confirm('Eliminar cliente?')\">Apagar</a>");
                     html.append("</td>");
 
                     html.append("</tr>");
@@ -169,21 +169,17 @@ public class App {
             }
 
             html.append("""
-                </table>
-                </body>
-                </html>
-            """);
+                        </table>
+                        </body>
+                        </html>
+                    """);
 
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, html.toString().getBytes().length);
             exchange.getResponseBody().write(html.toString().getBytes());
             exchange.close();
 
-        });    
-
-
-
-
+        });
 
         // FORM NOVO CLIENTE
         server.createContext("/novo", exchange -> {
@@ -191,52 +187,51 @@ public class App {
             StringBuilder html = new StringBuilder();
 
             html.append("""
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <style>
-                        body { font-family: Arial; }
-                        form { width: 300px; }
-                        input { width: 100%; padding: 8px; margin-bottom: 10px; }
-                        button { padding: 8px 12px; }
-                        a { text-decoration: none; }
-                    </style>
-                </head>
-                <body>
+                        <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <style>
+                                body { font-family: Arial; }
+                                form { width: 300px; }
+                                input { width: 100%; padding: 8px; margin-bottom: 10px; }
+                                button { padding: 8px 12px; }
+                                a { text-decoration: none; }
+                            </style>
+                        </head>
+                        <body>
 
-                <h2>Novo Cliente</h2>
+                        <h2>Novo Cliente</h2>
 
-                <a href='/clientes'>← Voltar à lista</a><br><br>
+                        <a href='/clientes'>← Voltar à lista</a><br><br>
 
-                <form method='POST' action='/guardar'>
-                    Nome:
-                    <input name='nome' required>
+                        <form method='POST' action='/guardar'>
 
-                    Email:
-                    <input name='email' type='email' required>
+                            Nif:
+                            <input name='nif' required>
 
-                    Telefone:
-                    <input name='telefone'>
+                            Nome:
+                            <input name='nome' required>
 
-                    <button type='submit'>Guardar</button>
-                </form>
+                            Email:
+                            <input name='email' type='email' required>
 
-                </body>
-                </html>
-            """);
+                            Telefone:
+                            <input name='telefone'>
+
+                            <button type='submit'>Guardar</button>
+                        </form>
+
+                        </body>
+                        </html>
+                    """);
 
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, html.toString().getBytes().length);
             exchange.getResponseBody().write(html.toString().getBytes());
             exchange.close();
-        }); 
+        });
 
-
-
-
-
-
-       // GUARDAR NOVO CLIENTE
+        // GUARDAR NOVO CLIENTE
         server.createContext("/guardar", exchange -> {
 
             if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -264,9 +259,18 @@ public class App {
                         String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
 
                         switch (key) {
-                            case "nome": nome = value; break;
-                            case "email": email = value; break;
-                            case "telefone": telefone = value; break;
+                            case "nome":
+                                nome = value;
+                                break;
+                                case "nif":
+                                nome = value;
+                                break;
+                            case "email":
+                                email = value;
+                                break;
+                            case "telefone":
+                                telefone = value;
+                                break;
                         }
                     }
                 }
@@ -277,55 +281,56 @@ public class App {
                     throw new Exception("Ligação à BD falhou!");
                 }
 
-                String sql = "INSERT INTO clientes(nome,email,telefone) VALUES (?,?,?)";
+                String sql = "INSERT INTO clientes(nome,nif,email,telefone) VALUES (?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setString(1, nome);
-                ps.setString(2, email);
-                ps.setString(3, telefone);
+                ps.setString(2, nif);
+                ps.setString(3, email);
+                ps.setString(4, telefone);
 
                 ps.executeUpdate();
 
                 ps.close();
                 con.close();
 
-                // HTML de sucesso 
+                // HTML de sucesso
                 html.append("""
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <style>
-                            body { font-family: Arial; }
-                            a { text-decoration: none; }
-                        </style>
-                    </head>
-                    <body>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <style>
+                                    body { font-family: Arial; }
+                                    a { text-decoration: none; }
+                                </style>
+                            </head>
+                            <body>
 
-                    <h2>:-) Cliente guardado com sucesso!</h2>
+                            <h2>:-) Cliente guardado com sucesso!</h2>
 
-                    <a href='/clientes'>Ver lista</a><br><br>
-                    <a href='/novo'>Inserir novo cliente</a>
+                            <a href='/clientes'>Ver lista</a><br><br>
+                            <a href='/novo'>Inserir novo cliente</a>
 
-                    </body>
-                    </html>
-                """);
+                            </body>
+                            </html>
+                        """);
 
             } catch (Exception e) {
                 e.printStackTrace();
 
                 html.append("""
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                    </head>
-                    <body>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                            </head>
+                            <body>
 
-                    <h2>!! Erro ao guardar cliente!</h2>
-                    <a href='/novo'>Voltar</a>
+                            <h2>!! Erro ao guardar cliente!</h2>
+                            <a href='/novo'>Voltar</a>
 
-                    </body>
-                    </html>
-                """);
+                            </body>
+                            </html>
+                        """);
             }
 
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
@@ -333,11 +338,6 @@ public class App {
             exchange.getResponseBody().write(html.toString().getBytes());
             exchange.close();
         });
-
-
-
-
-
 
         // FORM EDITAR
         server.createContext("/editar", exchange -> {
@@ -374,23 +374,23 @@ public class App {
                 String telefone = rs.getString("telefone");
 
                 html.append("""
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <style>
-                            body { font-family: Arial; }
-                            input { width: 100%; padding: 8px; margin-bottom: 10px; }
-                            form { width: 300px; }
-                        </style>
-                    </head>
-                    <body>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <style>
+                                    body { font-family: Arial; }
+                                    input { width: 100%; padding: 8px; margin-bottom: 10px; }
+                                    form { width: 300px; }
+                                </style>
+                            </head>
+                            <body>
 
-                    <h2>Editar Cliente</h2>
+                            <h2>Editar Cliente</h2>
 
-                    <a href='/clientes'>« Voltar</a><br><br>
+                            <a href='/clientes'>« Voltar</a><br><br>
 
-                    <form method='POST' action='/atualizar'>
-                """);
+                            <form method='POST' action='/atualizar'>
+                        """);
 
                 html.append("<input type='hidden' name='id' value='").append(id).append("'>");
 
@@ -399,12 +399,12 @@ public class App {
                 html.append("Telefone:<input name='telefone' value='").append(telefone).append("'>");
 
                 html.append("""
-                    <button type='submit'>Atualizar</button>
-                    </form>
+                            <button type='submit'>Atualizar</button>
+                            </form>
 
-                    </body>
-                    </html>
-                """);
+                            </body>
+                            </html>
+                        """);
 
                 rs.close();
                 ps.close();
@@ -414,23 +414,22 @@ public class App {
                 e.printStackTrace();
 
                 html.append("""
-                    <html>
-                    <body>
-                    <h2>!Erro ao carregar cliente</h2>
-                    <a href='/clientes'>Voltar</a>
-                    </body>
-                    </html>
-                """);
+                            <html>
+                            <body>
+                            <h2>!Erro ao carregar cliente</h2>
+                            <a href='/clientes'>Voltar</a>
+                            </body>
+                            </html>
+                        """);
             }
 
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, html.toString().getBytes().length);
             exchange.getResponseBody().write(html.toString().getBytes());
             exchange.close();
-        }); 
+        });
 
-
-        // ATUALIZAR CLIENTE 
+        // ATUALIZAR CLIENTE
         server.createContext("/atualizar", exchange -> {
 
             if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -456,10 +455,18 @@ public class App {
                         String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
 
                         switch (key) {
-                            case "id": idStr = value; break;
-                            case "nome": nome = value; break;
-                            case "email": email = value; break;
-                            case "telefone": telefone = value; break;
+                            case "id":
+                                idStr = value;
+                                break;
+                            case "nome":
+                                nome = value;
+                                break;
+                            case "email":
+                                email = value;
+                                break;
+                            case "telefone":
+                                telefone = value;
+                                break;
                         }
                     }
                 }
@@ -495,20 +502,20 @@ public class App {
                 e.printStackTrace();
 
                 String resp = """
-                    <html>
-                    <body>
-                    <h2>!Erro ao atualizar cliente</h2>
-                    <a href='/clientes'>Voltar</a>
-                    </body>
-                    </html>
-                """;
+                            <html>
+                            <body>
+                            <h2>!Erro ao atualizar cliente</h2>
+                            <a href='/clientes'>Voltar</a>
+                            </body>
+                            </html>
+                        """;
 
                 exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
                 exchange.sendResponseHeaders(200, resp.getBytes().length);
                 exchange.getResponseBody().write(resp.getBytes());
                 exchange.close();
             }
-        }); 
+        });
 
         server.start();
         System.out.println("Servidor em http://localhost:8080");

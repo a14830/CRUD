@@ -1,6 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "Crud/lib/mysql-connector-j-9.6.0.jar"
+        "/workspaces/CRUD/lib/mysql-connector-j-9.6.0.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src"
     ]
 }
