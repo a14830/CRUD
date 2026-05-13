@@ -781,9 +781,6 @@ public class App {
         });
 
 
-
-
-
         //// LISTA PRODUTOS
         server.createContext("/produtos", exchange -> {
 
@@ -838,7 +835,7 @@ public class App {
                     html.append("<td>");
                     html.append("<a href='/editar?id=").append(id).append("'>Editar</a>");
                     html.append("<a href='/apagar?id=").append(id)
-                            .append("' onclick=\"return confirm('Eliminar cliente?')\">Apagar</a>");
+                            .append("' onclick=\"return confirm('Eliminar Produto?')\">Apagar</a>");
 
                     html.append("</td>");
 
@@ -1004,7 +1001,7 @@ public class App {
 
                 }
 
-                String sql = "INSERT INTO clientes(refproduto,produto,preco) VALUES (?,?,?,?)";
+                String sql = "INSERT INTO produto(refproduto,produto,preco) VALUES (?,?,?)";
 
                 PreparedStatement ps = con.prepareStatement(sql);
 
@@ -1204,15 +1201,15 @@ public class App {
                                 idStr = value;
                                 break;
 
-                            case "nif":
-                                nif = value;
+                            case "refproduto":
+                                refproduto = value;
                                 break;
 
-                            case "nome":
-                                nome = value;
+                            case "produto":
+                                produto = value;
                                 break;
 
-                            case "email":
+                            case "preco":
                                 preco = value;
                                 break;
 
