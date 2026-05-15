@@ -426,7 +426,7 @@ public class App {
 
                 String referencia = "";
                 String produto = "";
-                float preco = "0"; 
+                double preco = 0.0;
 
                 for (String p : params) {
 
@@ -446,7 +446,7 @@ public class App {
                                 break;
 
                             case "preco":
-                                preco = value;
+                                preco = Double.parseDouble(value);
                                 break;
                         }
 
